@@ -1,31 +1,18 @@
 const router = require("express").Router();
 
-const PedidoController = require("../../../controllers/PedidoController");
-
-const { LojaValidation } = require("../../../controllers/validacoes/LojaValidation");
-const Validation = require("express-validation");
-const { PedidoValidation } = require("../../../controllers/validacoes/PedidoValidation");
 const auth = require("../../auth");
+const Validation = require("express-validation");
+const { DigitalizacaoValidation } = require("../../../controllers/validacoes/DigitalizacaoValidation");
 
-const pedidoController = new PedidoController();
+const DigitalizacaoController = require("../../../controllers/DigitalizacaoController");
+const digitalizacaoController = new DigitalizacaoController();
 
-// ADMIN
-router.get("/admin", auth.required, LojaValidation.admin, Validation(PedidoValidation.indexAdmin), pedidoController.indexAdmin);
-router.get("/admin/:id", auth.required, LojaValidation.admin, Validation(PedidoValidation.showAdmin), pedidoController.showAdmin);
+router.get("/", digitalizacaoController.index);
+router.get("/:id", Validation(DigitalizacaoValidation.show), digitalizacaoController.show); // testado
 
-router.delete("/admin/:id", auth.required, LojaValidation.admin, Validation(PedidoValidation.removeAdmin), pedidoController.removeAdmin);
-
-// -- carrinho
-router.get("/admin/:id/carrinho", auth.required, LojaValidation.admin, Validation(PedidoValidation.showCarrinhoPedidoAdmin), pedidoController.showCarrinhoPedidoAdmin);
-
-// CLIENTE
-router.get("/", auth.required, Validation(PedidoValidation.index), pedidoController.index);
-router.get("/:id", auth.required, Validation(PedidoValidation.show), pedidoController.show);
-
-router.post("/", auth.required, Validation(PedidoValidation.store), pedidoController.store);
-router.delete("/:id", auth.required, Validation(PedidoValidation.remove), pedidoController.remove);
-
-// -- carrinho
-router.get("/:id/carrinho", auth.required, Validation(PedidoValidation.showCarrinhoPedido), pedidoController.showCarrinhoPedido);
+router.post("/", auth.required, Validation(DigitalizacaoValidation.store), digitalizacaoController.store); // testado
+router.put("/:id", auth.required, DigitalizacaoValidation.admin,
+    Validation(DigitalizacaoValidation.update), digitalizacaoController.update); // testado
+router.delete("/:id", auth.required, DigitalizacaoValidation.admin, digitalizacaoController.remove); // testado
 
 module.exports = router;
