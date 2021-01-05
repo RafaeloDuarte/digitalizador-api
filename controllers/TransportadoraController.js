@@ -17,6 +17,12 @@ class TransportadoraConstroller {
             .catch(next);
     }
 
+    showByName(req, res, next) {
+        Transportadora.findOne({ 'nome': req.params.nome })
+            .then(transportadora => res.send({ transportadora }))
+            .catch(next);
+    }
+
     //POST
     store(req, res, next) {
         const { nome, cnpj, email, telefones, endereco } = req.body;

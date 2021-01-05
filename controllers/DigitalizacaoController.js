@@ -37,6 +37,9 @@ class DigitalizacaoConstroller {
                 if (qtde_digitalizacoes) d.qtde_digitalizacoes = d.qtde_digitalizacoes + qtde_digitalizacoes;
 
                 d.save().then(() => res.send({ d })).catch(next);
+            } else {
+                digitalizacao.save().then(() => res.send({ digitalizacao })).catch(next);
+                return
             }
         }).catch(next);
     }
@@ -68,9 +71,22 @@ class DigitalizacaoConstroller {
         }).catch(next);
     }
 
+    showTransportadora(req, res, next) {
+        Transportadora.findOne({ 'nome': req.params.nome })
+            .then(transportadora => {
+                Digitalizacao.find({ 'transportadora': transportadora.id })
+                    .then(digitalizacao => res.send({ digitalizacao }))
+                    .catch(next);
+            }).catch(next);
+    }
+
+    showByDate(req, res, next) {
+        const data = new Date(req.params.data)
+        Digitalizacao.find({ 'createAt': transportadora.id })
+            .then(digitalizacao => res.send({ digitalizacao }))
+            .catch(next);
+    }
+
 }
-
-
-
 
 module.exports = DigitalizacaoConstroller

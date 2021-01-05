@@ -25,6 +25,12 @@ const DigitalizacaoValidation = {
         }
     },
 
+    showByName: {
+        params: {
+            nome: Joi.string().required()
+        }
+    },
+
     store: {
         body: {
             transportadora: Joi.string().alphanum().length(24).required(), 

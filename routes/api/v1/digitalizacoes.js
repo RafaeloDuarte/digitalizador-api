@@ -10,6 +10,8 @@ const digitalizacaoController = new DigitalizacaoController();
 router.get("/", digitalizacaoController.index);
 router.get("/:id", Validation(DigitalizacaoValidation.show), digitalizacaoController.show); // testado
 
+router.get("/transportadora/:nome", Validation(DigitalizacaoValidation.showByName), digitalizacaoController.showTransportadora); // testado
+
 router.post("/", auth.required, Validation(DigitalizacaoValidation.store), digitalizacaoController.store); // testado
 router.put("/:id", auth.required, DigitalizacaoValidation.admin,
     Validation(DigitalizacaoValidation.update), digitalizacaoController.update); // testado

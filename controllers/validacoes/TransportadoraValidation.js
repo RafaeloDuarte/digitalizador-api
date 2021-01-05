@@ -23,6 +23,11 @@ const TransportadoraValidation = {
             id: Joi.string().alphanum().length(24).required()
         }
     },
+    showByName: {
+        params: {
+            nome: Joi.string().required()
+        }
+    },
     store: {
         body: {
             nome: Joi.string().required(), 
