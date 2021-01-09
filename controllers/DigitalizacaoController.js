@@ -24,7 +24,7 @@ class DigitalizacaoConstroller {
         const { transportadora, qtde_digitalizacoes } = req.body;
         const digitalizacao = new Digitalizacao({ transportadora, qtde_digitalizacoes });
 
-        Digitalizacao.findOne({ 'transportadora': transportadora }).then(d => {
+        Digitalizacao.findOne({ 'transportadora': transportadora }).sort({ createdAt: -1 }).then(d => {
             if (!d) {
                 digitalizacao.save().then(() => res.send({ digitalizacao })).catch(next);
                 return
